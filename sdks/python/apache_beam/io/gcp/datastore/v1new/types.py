@@ -263,7 +263,7 @@ class Entity(object):
   @staticmethod
   def from_client_entity(client_entity):
     res = Entity(
-        Key.from_client_key(client_entity.key),
+        Key.from_client_key(client_entity.key) if client_entity.key else None,
         exclude_from_indexes=set(client_entity.exclude_from_indexes))
     for name, value in client_entity.items():
       if isinstance(value, key.Key):
@@ -279,7 +279,7 @@ class Entity(object):
     represents this entity.
     """
     res = entity.Entity(
-        key=self.key.to_client_key(),
+        key=self.key.to_client_key() if self.key else None,
         exclude_from_indexes=tuple(self.exclude_from_indexes))
     for name, value in self.properties.items():
       if isinstance(value, Key):
